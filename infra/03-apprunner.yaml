@@ -1,0 +1,59 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Humor App! - Step 3: App Runner Service"
+
+Parameters:
+  ImageUri:
+    Type: String
+    Description: Full ECR image URI (e.g. 123456789.dkr.ecr.us-east-1.amazonaws.com/humor-app-backend:latest)
+
+  InstanceRoleArn:
+    Type: String
+    Description: ARN of the instance role for Bedrock access
+
+  AccessRoleArn:
+    Type: String
+    Description: ARN of the access role for ECR pull
+
+Resources:
+  AppRunnerService:
+    Type: AWS::AppRunner::Service
+    Properties:
+      ServiceName: humor-app-backend
+      SourceConfiguration:
+        AuthenticationConfiguration:
+          AccessRoleArn: !Ref AccessRoleArn
+        AutoDeploymentsEnabled: true
+        ImageRepository:
+          ImageIdentifier: !Ref ImageUri
+          ImageRepositoryType: ECR
+          ImageConfiguration:
+            Port: "4000"
+            RuntimeEnvironmentVariables:
+              - Name: PORT
+                Value: "4000"
+              - Name: AWS_REGION
+                Value: us-east-1
+              - Name: NODE_ENV
+                Value: production
+      InstanceConfiguration:
+        Cpu: "0.25 vCPU"
+        Memory: "0.5 GB"
+        InstanceRoleArn: !Ref InstanceRoleArn
+      HealthCheckConfiguration:
+        Protocol: HTTP
+        Path: /health
+        Interval: 10
+        Timeout: 5
+        HealthyThreshold: 1
+        UnhealthyThreshold: 5
+
+Outputs:
+  ServiceUrl:
+    Description: Public URL of the App Runner service
+    Value: !Sub "https://${AppRunnerService.ServiceUrl}"
+    Export:
+      Name: humor-app-service-url
+
+  ServiceArn:
+    Description: ARN of the App Runner service
+    Value: !GetAtt AppRunnerService.ServiceArn

@@ -1,0 +1,111 @@
+export type Locale = "pt-BR" | "en-US" | "es-US";
+
+export const i18n = {
+  "pt-BR": {
+    appName: "Humor App!",
+    subtitle: "Web App Trilíngue de Piadas com IA",
+    heroText: "Carolina está pronta para te fazer rir!",
+    listeningLabel: "Estou ouvindo...",
+    speakingLabel: "Carolina está falando...",
+    connectingLabel: "Conectando...",
+    idleLabel: "Clique para falar",
+    changeLangHint: 'Diga: "muda para inglês"',
+    stopHint: 'Diga: "pode parar" para silenciar',
+    wakeHint: 'Diga: "ativa o microfone" para começar',
+    currentVoice: "Voz atual: Carolina",
+    flags: {
+      "pt-BR": "Português (Brasil)",
+      "en-US": "Inglês (EUA)",
+      "es-US": "Espanhol (Latino)",
+    },
+    errorMessages: {
+      connectionFailed: "Falha na conexão com o servidor",
+      micDenied: "Permissão do microfone negada",
+      voiceError: "Erro na sessão de voz",
+      jokeError: "Erro ao gerar piada",
+    },
+    accessibility: {
+      micButton: "Ativar microfone",
+      micButtonActive: "Desativar microfone",
+      flagSelector: "Selecionar idioma",
+      skipToContent: "Pular para conteúdo",
+      skipToVoice: "Pular para controle de voz",
+    },
+    toasts: {
+      languageChanging: "Mudando para",
+      jokeGenerating: "Gerando piada em",
+    },
+  },
+  "en-US": {
+    appName: "Humor App!",
+    subtitle: "Trilingual Joke Web App with AI",
+    heroText: "Tiffany is ready to make you laugh!",
+    listeningLabel: "Listening...",
+    speakingLabel: "Tiffany is speaking...",
+    connectingLabel: "Connecting...",
+    idleLabel: "Click to speak",
+    changeLangHint: 'Say: "switch to Spanish"',
+    stopHint: 'Say: "stop talking" to silence',
+    wakeHint: 'Say: "activate the microphone" to start',
+    currentVoice: "Current voice: Tiffany",
+    flags: {
+      "pt-BR": "Portuguese (Brazil)",
+      "en-US": "English (USA)",
+      "es-US": "Spanish (Latin America)",
+    },
+    errorMessages: {
+      connectionFailed: "Failed to connect to server",
+      micDenied: "Microphone permission denied",
+      voiceError: "Voice session error",
+      jokeError: "Failed to generate joke",
+    },
+    accessibility: {
+      micButton: "Activate microphone",
+      micButtonActive: "Deactivate microphone",
+      flagSelector: "Select language",
+      skipToContent: "Skip to content",
+      skipToVoice: "Skip to voice control",
+    },
+    toasts: {
+      languageChanging: "Switching to",
+      jokeGenerating: "Generating joke in",
+    },
+  },
+  "es-US": {
+    appName: "Humor App!",
+    subtitle: "Web App Trilingüe de Chistes con IA",
+    heroText: "¡Lupe está lista para hacerte reír!",
+    listeningLabel: "Escuchando...",
+    speakingLabel: "Lupe está hablando...",
+    connectingLabel: "Conectando...",
+    idleLabel: "Haz clic para hablar",
+    changeLangHint: 'Di: "cambia a inglés"',
+    stopHint: 'Di: "deja de hablar" para silenciar',
+    wakeHint: 'Di: "activa el micrófono" para empezar',
+    currentVoice: "Voz actual: Lupe",
+    flags: {
+      "pt-BR": "Portugués (Brasil)",
+      "en-US": "Inglés (EE.UU.)",
+      "es-US": "Español (Latinoamérica)",
+    },
+    errorMessages: {
+      connectionFailed: "Error de conexión con el servidor",
+      micDenied: "Permiso de micrófono denegado",
+      voiceError: "Error en la sesión de voz",
+      jokeError: "Error al generar chiste",
+    },
+    accessibility: {
+      micButton: "Activar micrófono",
+      micButtonActive: "Desactivar micrófono",
+      flagSelector: "Seleccionar idioma",
+      skipToContent: "Saltar al contenido",
+      skipToVoice: "Saltar al control de voz",
+    },
+    toasts: {
+      languageChanging: "Cambiando a",
+      jokeGenerating: "Generando chiste en",
+    },
+  },
+} as const;
+
+export type I18nStrings = (typeof i18n)["pt-BR"];

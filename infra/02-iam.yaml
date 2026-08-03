@@ -1,0 +1,58 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Humor App! - Step 2: IAM Roles for App Runner"
+
+Resources:
+  AppRunnerInstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: humor-app-instance-role
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: tasks.apprunner.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonBedrockFullAccess
+      Policies:
+        - PolicyName: BedrockNovaSonicAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - bedrock:InvokeModel
+                  - bedrock:InvokeModelWithResponseStream
+                  - bedrock:InvokeModelWithBidirectionalStream
+                  - bedrock-runtime:*
+                Resource:
+                  - arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-sonic-v2:0
+                  - arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-lite-v1:0
+
+  AppRunnerAccessRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: humor-app-access-role
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: build.apprunner.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSAppRunnerServicePolicyForECRAccess
+
+Outputs:
+  InstanceRoleArn:
+    Description: ARN of the App Runner instance role (Bedrock access)
+    Value: !GetAtt AppRunnerInstanceRole.Arn
+    Export:
+      Name: humor-app-instance-role-arn
+
+  AccessRoleArn:
+    Description: ARN of the App Runner access role (ECR pull)
+    Value: !GetAtt AppRunnerAccessRole.Arn
+    Export:
+      Name: humor-app-access-role-arn
